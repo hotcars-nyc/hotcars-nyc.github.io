@@ -248,10 +248,15 @@ function user_drawSubmap(user_svg)
             	.projection(projection);
 	
 	user_subwayMap=user_svg.append('g').attr('class','user_subwayMap');
+	NYC();
+	PATHS();
+	lineStart();
 
 	// NYC MAP
-    d3.json('./data/nyc_boroughs.json',function(err,nyc_boroughs)
+    function NYC()
     {
+    	d3.json('./data/nyc_boroughs.json',function(err,nyc_boroughs)
+    	{
     	if(err) console.log(err);
     	user_subwayMap.append('g')
 					 .attr('class','user_NYC')
@@ -262,8 +267,10 @@ function user_drawSubmap(user_svg)
 		             .attr("d", path)
 		             .attr("class", "user_borough_map")
 		             .style('opacity',0.1);
-    });
+    	});
+    }
 
+    function PATHS(){
     // lines
     d3.json("./data/paths.json",function(error, subway)
 	{
@@ -291,7 +298,9 @@ function user_drawSubmap(user_svg)
 	    				d3.select('.user_temp_rect').remove();
 	    			});
     });
+}
   
+  function lineStart(){
     //line_starts
     d3.csv('./data/stops.csv',function(err,stops){
     	if(err) console.log(err);
@@ -318,7 +327,8 @@ function user_drawSubmap(user_svg)
         		.on('mouseout',function(){
     				d3.select('.user_temp_rect').remove();
     			});
-    })
+    });
+}
     //   //stops
     // d3.csv('subway_map.csv',function(err,stops){
     // 	if(err) console.log(err);
