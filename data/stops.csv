@@ -1,0 +1,22 @@
+Line,Lat,Long,county_name,position,stop_name,county,tract,tract_lookup
+1,40.889946,-73.899798,the Bronx,37,Van Cortlandt Park-242 St.,5,28500,28500
+2,40.903509,-73.850124,the Bronx,49,Wakefield-241 St.,5,44200,44200
+3,40.660285,-73.883276,Brooklyn,1,New Lots Ave.,47,112400,112400
+4,40.886737,-73.87812,the Bronx,28,Woodlawn,5,43100,43100
+5,40.88798,-73.831195,the Bronx,36,Eastchester-Dyre Ave.,5,48400,48400
+6,40.853041,-73.826991,the Bronx,38,Pelham Bay Park,5,27600,27600
+7,40.759946,-73.828414,Queens,21,Flushing-Main St.,81,85300,85300
+A,40.604657,-73.754178,Queens,1,Far Rockaway-Mott Ave.,81,100802,100802
+B,40.864025,-73.880466,the Bronx,37,Bedford Park Blvd.,5,41300,41300
+C,40.675533,-73.830242,Brooklyn,1,Euclid Ave.,47,119600,119600
+D,40.587602,-74.001491,Brooklyn,6,18 Ave.,47,27800,27800
+E,40.751996,-74.00500,Manhattan,7,34 St.-Penn Station,61,10100,10100
+F,40.680944,-74.007000,Brooklyn,19,Carroll St.,47,7500,7500
+G,40.730122,-73.953049,Brooklyn,19,Greenpoint Ave.,47,57500,57500
+J,40.695142,-73.871633,Brooklyn,22,Cypress Hills,47,118201,118201
+L,40.640757,-73.901755,Brooklyn,24,Canarsie-Rockaway Parkway,47,97400,97400
+M,40.712082,-73.88954,Queens,1,Middle Village-Metropolitan Ave.,81,61301,61301
+N,40.5669,-73.980846,Brooklyn,1,Coney Island-Stillwell Ave.,47,35000,35000
+Q,40.775025,-73.911891,Queens,35,Astoria-Ditmars Blvd.,81,11500,11500
+R,40.607363,-74.030404,Brooklyn,1,Bay Ridge-95 St.,47,5800,5800
+Z,40.700267,-73.843223,Queens,17,104 St.,81,2600,2600
