@@ -1,0 +1,119 @@
+[
+  {
+    "name": "[1,5]",    
+		"children": [
+		  {
+			"name": "Kawasaki",
+			"children": [
+			{
+				"name": "R188", "colour": "#F0CBB6"
+			}
+		   ]
+		  }
+		]      
+  },      
+  {
+    "name": "[5,10]",    
+		"children": [
+		  {
+			"name": "Alstom",
+			"children": [
+			{
+				"name": "R160", "colour": "#F0CBB6"
+			}
+		   ]
+		  }
+		]      
+  },
+  {
+    "name": "[10,15]",    
+		"children": [
+		  {
+			"name": "Bombardier",
+			"children": [
+			{
+				"name": "R142", "colour": "#FFDBCF"
+			}
+		   ]
+		  },
+		  {
+			"name": "Kawasaki",
+			"children": [
+			{
+				"name": "R142A", "colour": "#FFDBCF"
+			},
+			{
+				"name": "R143", "colour": "#FFDBCF"
+			}
+		   ]
+		  }
+		]      
+  },
+  {
+    "name": "[25,30]",    
+		"children": [
+		  {
+			"name": "Westing House",
+			"children": [
+			{
+				"name": "R68", "colour": "#DBB8B1"
+			}
+		   ]
+		  },
+		  {
+			"name": "Bombardier",
+			"children": [
+			{
+				"name": "R62A", "colour": "#DBB8B1"
+			}
+		   ]
+		  },
+		  {
+			"name": "Kawasaki",
+			"children": [
+			{
+				"name": "R62", "colour": "#DBB8B1"
+			},
+			{
+				"name": "R68A", "colour": "#DBB8B1"
+			}
+		   ]
+		  }
+		]      
+  },
+  {
+    "name": "[35,40]",    
+		"children": [
+		  {
+			"name": "Pullman",
+			"children": [
+			{
+				"name": "R46", "colour": "#EEBDEF"
+			}
+		   ]
+		  }
+		]      
+  },
+  {
+    "name": "[45,50]",    
+		"children": [
+		  {
+			"name": "Budd",
+				"children": [
+			{
+				"name": "R32", "colour": "#F1E7B4"
+			}
+		   ]
+		  },
+		  {
+			"name": "St. Louis",
+				"children": [
+			{
+				"name": "R42", "colour": "#F1E7B4"
+			}
+		   ]
+		  }
+		]      
+  }
+]
+

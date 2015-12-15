@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Hotcars NYC - WPI CS573 Final Project</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/agency.css" rel="stylesheet">
+	<link href="css/c3.css" rel="stylesheet" type="text/css">
+	<link href="css/c3-main.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href="css/d3.parcoords.css">
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
+	<script src="data/paths.json"></script>
+	<script src="data/nyc_boroughs.json"></script>
+	<script type='text/javascript' src='js/user.js'></script>
+	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+	<script src = "js/d3.parcoords.js"></script>
+	
+	
+					
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+	<style>
+		@import url(css/d3.parsets.css);
+		
+		.pathsunburst {
+		  stroke: #FFFFFF;
+		  stroke-width: 1.5;
+		  cursor: pointer;
+		}
+
+		.textsunburst {
+		  font: 11px sans-serif;
+		  cursor: pointer;
+		}
+		
+	#wrapper {
+	   position: relative;
+	   float: left;
+	   top: 15px;
+	   font-family: sans-serif;
+	   font-size: 15px;
+		}
+
+	#tooltip{
+			font-family: sans-serif;
+			font-size: 9px;
+			color:black;
+		}
+	</style>
+	
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">hotcars-nyc</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#services" id="introbutton">Introduction</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#overview">Overview</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about">For Passengers</a>
+                    </li>
+					<li>
+                        <a class="page-scroll" href="#mta">For MTA</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#team">Team</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#portfolio">Resources</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">Data Visualization Final Project Portfolio</div>
+                <div class="intro-heading">Hot Subway Cars in NYC</div>
+                <a href="#services" class="page-scroll btn btn-xl">Begin</a>
+                
+            </div>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section id="services" style="padding-top: 80px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Introduction</h2>
+                    <p class="text-muted">
+					New York City (NYC) is the most populous city in the US and has been described as the cultural and financial capital of the world. As a metropolitan city, the public transportation plays a very important role for the convenience of the city's dwellers and visitors. The subway is considered as the favorite public transportation. However, during summer time where most people would visit the city, there has been a major issue occurred frequently over years, which is the hot cars problem. The hot car problem is caused by the air-conditioning breakdowns in the subway cars which happened about 10 times a day during June, July and August between 2010 and 2014, according to analysis of Metropolitan Transportation Authority data obtained by The New York World through open records request. In total, there were nearly 6,500 “hot cars” over the five-year period covered by the data. Unsurprisingly, the vast majority of those incidents occurred during the hottest months of the year. This problem brings a very bad experience for the users, as they described that it was a horrendous to be stuck on an underground hot train.
+					</p>
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/FkTybqcX-Yo" frameborder="0" allowfullscreen></iframe>
+					
+					
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-lg-12">
+					<div id="car-animation"></div>
+					<!--<script src="js/cars-animation.js"></script>-->
+                </div>                
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Grid Section -->
+    <section id="overview" class="bg-light-gray" style="padding-top: 100px">
+        <div class="container">
+            <div class="row"  style="padding-top: 50px">
+                <div class="col-lg-12 text-center">
+					<h2 class="section-heading">Overview</h2>
+				</div>
+                <div class="col-md-5 text-center">                    
+                    <p class="text-muted">
+						The MTA’s Division of Car Equipment performs daily pre-service inspections of the HVAC (heating, ventilation and air conditioning) units on each of the subway’s 6,300 subway cars.
+
+						Air-conditioning breakdowns happened about 10 times a day during June, 
+						July and August between 2010 and 2014, according to analysis of Metropolitan Transportation Authority data 
+						obtained by The New York World through open records request. In total, there were nearly 6,500 
+						“hot cars” over the five-year period covered by the data. Unsurprisingly, the vast majority of 
+						those incidents occurred during the hottest months of the year. Notice that <a id="2013" onmouseover="chart.focus(['2013']);tooltip.show();" onmouseout="chart.focus()">2013</a> has the highest peak of hotcars problem on July while 
+						year <a id="2014" onmouseover="chart.focus(['2014']);tooltip.show();" onmouseout="chart.focus()">2014</a> has the lowest peak on July.
+						This does make sense because in fact, 2013 <a href="http://www.weather.com/news/news/extremes-july-2013-20130801#/1" target="_blank">was reporited</a> to have an extreme hot weather and 2014 is <a href="http://nypost.com/2014/08/08/summer-2014-is-coldest-in-a-decade/" target="_blank">the opposite.</a>
+					</p>
+					
+				</div>
+				<div class="col-md-7 text-center">
+				
+					<div id="chart-overview"></div>
+					
+					<script src="js/c3.min.js"></script>
+					<script type="text/javascript">
+						var chart = c3.generate({
+						bindto: '#chart-overview',
+						data: {
+						  columns: [
+							['2010', 10, 4, 9, 32, 63, 328, 485, 371, 150, 27, 7, 7],
+							['2011', 8, 7, 3, 24, 63, 160, 375, 236, 81, 15, 3, 8],
+							['2012', 3, 3, 23, 24, 76, 224, 485, 368, 188, 29, 5, 5],
+							['2013', 4, 5, 6, 24, 96, 274, 504, 215, 173, 63, 11, 3],
+							['2014', 4, 2, 3, 9, 67, 203, 346, 260, 210, 72, 6, 3]
+						  ],
+						  type: 'spline'
+						},
+						axis: {
+							x: {
+								type: 'category',
+								categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+							},
+							y: {
+								max: 550,
+								min: 0,
+								padding: {top: 0, bottom: 0}
+							}
+						},
+						grid: {
+							y: {
+								lines: [
+									{value: 65},
+									{value: 250},
+									{value: 480}
+								]
+							}
+						},
+						color: {
+							pattern: ['#1f77b4', '#d62728', '#ff7f0e', '#70039C', '#2ca02c']
+						},
+						legend: {
+							position: 'right'
+						},
+						padding: {
+							top: 10,
+							right: 100,
+							bottom: 40,
+							left: 100,
+						},
+					   
+						
+					});
+
+					//start();
+					</script>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" style="padding-top: 80px;">
+       <div class="user_container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">For Passengers</h2>
+                </div>
+            </div>
+			<div id="huan">	</div>	
+			<div class="row">
+			</div>			
+        </div>
+		<script>user_initiate();</script>
+	
+    </section>
+	
+	<!--MTA Section -->
+	<section id="mta" style="padding-top: 80px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">For MTA</h2>
+
+					<p>
+					Since our topic is highly related with hot temperature, we only care about the "hot cars" 
+					happening during summer. So we choose the dataset with a time range from June to September 
+					within these 5 years. The results are unsurprising but to some extent counter-intuitive. 
+					In general, the older cars tend to have more "hot issues" than new cars. The top 1 worst 
+					performance car is <a id="R32" onmouseover='graph.highlight(R32);'>R32</a>,whose 
+					in-sevice age is the oldest, running on C line. The car with least air conditioner breakdowns 
+					is <a id="R188" onmouseover='graph.highlight(R188);'>R188</a>, and is also the youngest, 
+					serving on line 7. The interesting part is age doesn't always positively related with 
+					performance: <a id="R188" onmouseover='graph.highlight(R142A);'>R142A</a> only 
+					working a dozen years, running on line 4 and 6, ranks as the worst top 5.
+					</p>
+					
+					<div id="wrapper" class="parcoords" style="width:60%; height:500px"></div>
+					<script src = "js/parallel.js"></script>
+					
+                </div>
+            </div>
+			
+        </div>
+    </section>
+	
+	<section id="mta-2" style="padding-top: 80px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">For MTA</h2>					
+					<p class="text-muted">
+					The charts below will provide the reason of the hot car problems along with the repair action from the MTA.
+					<br />Click any section on the sunburst chart and see further information displayed in a parallel set chart. 
+					</p>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-4">
+					
+					<div id="vis2">&nbsp;</div>
+					<script src="js/d3.parsets.js"></script>
+					<script src="js/mta-1.js"></script>
+					<!-- <button id="sun" onClick="click([{'colour': #DBB8B1','depth': 3,'dx': 0.08333333333333334,'dy': 0.25,'name': 'R62A'}])">R160 here</button> -->
+                </div>
+				<div class="col-md-8">
+					<div id="vis3" style="margin-top: 50px; margin-left: 30px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="bg-light-gray" style="padding-top: 100px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Our Team</h2>
+                    <h3 class="section-subheading text-muted">This project is designed and developed for the final project of CS573 Data Visualization (Fall 2015) at Worcester Polytechnic Institute by:</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="team-member">
+                        <img src="img/team/1.jpg" class="img-responsive img-circle" alt="">
+                        <h4>Yanpu Li</h4>
+                        <p class="text-muted">Data Science '16 - WPI</p>
+                        <ul class="list-inline social-buttons">
+                            <li><a href="https://github.com/YanpuLi" target="_blank"><i class="fa fa-github"></i></a>
+                            </li>
+                            <li><a href="https://www.facebook.com/profile.php?id=100008602692477" target="_blank"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="https://www.linkedin.com/in/yanpu-li-4b3923b0" target="_blank"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="team-member">
+                        <img src="img/team/2.jpg" class="img-responsive img-circle" alt="">
+                        <h4>Azharuddin Priyotomo</h4>
+                        <p class="text-muted">Data Science '16 - WPI</p>
+                        <ul class="list-inline social-buttons">
+                            <li><a href="https://github.com/apriyotomo/" target="_blank"><i class="fa fa-github"></i></a>
+                            </li>
+                            <li><a href="https://www.facebook.com/azharuddinp" target="_blank"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="https://id.linkedin.com/in/azharuddinpriyotomo" target="_blank"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="team-member">
+                        <img src="img/team/3.jpg" class="img-responsive img-circle" alt="">
+                        <h4>Huan Ye</h4>
+                        <p class="text-muted">Data Science '16 - WPI</p>
+                        <ul class="list-inline social-buttons">
+                            <li><a href="https://github.com/Leaf27" target="_blank"><i class="fa fa-github"></i></a>
+                            </li>
+                            <li><a href="https://www.facebook.com/profile.php?id=100008543286687" target="_blank"><i class="fa fa-facebook"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    
+    <!-- Contact Section -->
+    <section id="portfolio" style="padding-top: 100px">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Resources</h2>
+                    <h3 class="section-subheading text-muted">Below are our resources for creating this project:</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/portfolio/data.png" width="600" height="450px" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4>Dataset</h4>
+                        <p class="text-muted">MTA Dataset</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/portfolio/code.png" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4>Codes References</h4>
+                        <p class="text-muted">Reusable D3 scripts, snippets, etc..</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 portfolio-item">
+                    <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content">
+                                <i class="fa fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img src="img/portfolio/golden.png" class="img-responsive" alt="">
+                    </a>
+                    <div class="portfolio-caption">
+                        <h4>Website Design</h4>
+                        <p class="text-muted">Bootstrap theme</p>
+                    </div>
+                </div>
+                
+                
+                
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="copyright">Copyright &copy; hotcars-nyc.github.io 2015</span>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline social-buttons">
+                        <li><a href="https://github.com/hotcars-nyc/hotcars-nyc.github.io"><i class="fa fa-github"></i></a></li>
+                    
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline quicklinks">
+                        <li><a href="http://www.wpi.edu" target="_blank">Worcester Polytechnic Institute</a> - CS573 Fall 2015
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Portfolio Modals -->
+    <!-- Use the modals below to showcase details about your portfolio projects! -->
+
+    <!-- Portfolio Modal 1 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here -->
+                            <h2>Dataset</h2>
+                            <p>All the hot cars subway data are retrieved from <a href="http://data.beta.nyc/dataset/subway-hot-cars-dataset/resource/bd1efb1b-326e-43fc-93f0-4f2e601c117b" target="_blank">here</a> <br/>
+							The data is preprocessed further to produce the desired visualizations. 
+							
+							</p>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Modal 2 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="modal-body">
+                            <h2>Codes References</h2>
+                            <p>
+							1. Zoomable sunburst diagram derived from <a href="https://github.com/amaunz/d3" target="_blank">Coffee Wheel</a> by Jason Davies<br />
+							2. Parallel Set derived from <a href="https://github.com/jasondavies/d3-parsets" target="_blank">Jason Davies repository</a><br />
+							3. Parallel Coordinate derived from <a href="https://syntagmatic.github.io/parallel-coordinates/" target="_blank">syntagmatic repository</a><br />
+							4. Line Chart derived from <a href="http://c3js.org/samples/simple_multiple.html" target="_blank">C3 library</a><br />
+							5. NYC subway map derived from <a href="http://c3js.org/samples/simple_multiple.html" target="_blank">website</a>
+							
+							</p>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Modal 3 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <!-- Project Details Go Here -->
+                            <h2>Website Design</h2>
+                            <p>This website design is using Agency theme which can be downloaded <a href="http://startbootstrap.com/template-overviews/agency/" target="_blank">here</a>.
+							<br />Agency is a free bootstrap theme created by <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a>
+							</p>
+							<button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/cbpAnimatedHeader.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/agency.js"></script>
+
+</body>
+
+</html>
