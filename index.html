@@ -262,44 +262,99 @@
         </div>
 		<script>user_initiate();</script>
     </section>
-	<!--MTA Section -->
-	<section id="mta" style="padding-top: 80px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">For MTA</h2>
+</section> 
 
-					<p>
-					Since our topic is highly related with hot temperature, we only care about the "hot cars" 
-					happening during summer. So we choose the dataset with a time range from June to September 
-					within these 5 years. The results are unsurprising but to some extent counter-intuitive. 
-					In general, the older cars tend to have more "hot issues" than new cars. The top 1 worst 
-					performance car is <a id="R32" onmouseover='graph.highlight(R32);'>R32</a>,whose 
-					in-sevice age is the oldest, running on C line. The car with least air conditioner breakdowns 
-					is <a id="R188" onmouseover='graph.highlight(R188);'>R188</a>, and is also the youngest, 
-					serving on line 7. The interesting part is age doesn't always positively related with 
-					performance: <a id="R188" onmouseover='graph.highlight(R142A);'>R142A</a> only 
-					working a dozen years, running on line 4 and 6, ranks as the worst top 5.
-					</p>
-					
-					<div id="wrapper" class="parcoords" style="width:60%; height:500px"></div>
-					<script src = "js/parallel.js"></script>
-					
-                </div>
-            </div>
-			
-        </div>
-    </section>
+<!--MTA Section --> 
+<section id="mta" style="padding-top: 80px;"> 
+<div class="container"> 
+<div class="row"> 
+<div class="col-lg-12 text-center"> 
+<h2 class="section-heading">For MTA: Hot Car Frequency Trend</h2> 
+</div> 
+
+<div class="col-md-6 text-muted"> 
+<p style="color:#808080" >Information about car type, average in-service age and its in-service lines, it is shown in the left table. "Number of cars" means how many cars of a certain car type are in service. It is also shown in the parallel coordinates chart below as "TotalNumber". </p> 
+<p style="color:#808080">In parallel coordinates chart, we visualized "Hot Car" frequency count within 5 years (shown in the axes from "Year:2010" to "Year":2014). As the range of "TotalNumber" varies a lot, we can't simply focus on count values. So we calculated the ratios by using count divided by its "TotalNumber". "AvgMRatio" stands for average ratio for each car type in a certain month within 5 years. "AvgRatio" is the average AvgMRatio within all these months. By using brush to select lines in the chart below, you can either check the frenquencies and ratios of each car type, or view the trend in a certain month.</p> 
+</div> 
+<div class="col-md-6 text-right"> 
+<img src="img/line.jpg" alt="" style="width:500px;height:350px;"> 
+</div> 
+<p class="col-md-12 text-muted" style="padding-top: 20px;"> 
+Since our topic is highly related with hot temperature, we only care about the "hot cars" 
+happening during summer. So we choose the dataset with a time range from June to September 
+within these 5 years. The results are unsurprising but to some extent counter-intuitive. 
+In general, the older cars tend to have more "hot issues" than new cars. The top 1 worst 
+performance car is <a id="R32" onmouseover='graph.highlight(R32);'>R32</a>,whose 
+in-sevice age is the oldest, running on C line. The car with least air conditioner breakdowns 
+is <a id="R188" onmouseover='graph.highlight(R188);'>R188</a>, and is also the youngest, 
+serving on line 7. The interesting part is age doesn't always positively related with 
+performance: <a id="R188" onmouseover='graph.highlight(R142A);'>R142A</a> only 
+working a dozen years, running on line 4 and 6, ranks as the worst top 5. 
+</p> 
+<div id="wrapper" class="parcoords" style="width:100%; height:500px; center" ></div> 
+<script src = "js/parallel.js"></script> 
+<script type="text/javascript"> 
+
+d3.csv("./data/month_new.csv", function(data){ 
+
+var firstCell = data.map(function(d){return d3.values(d)[0]}); 
+
+var textLength = 0; 
+firstCell.forEach(function(d){ 
+if (d.length > textLength) textLength = d.length; 
+}); 
+
+
+graph = d3.parcoords()('#wrapper') 
+.data(data) 
+.margin({ top: 25, left: 3 * textLength, bottom: 25, right: 0 }) 
+.alpha(0.6) 
+.mode("queue") 
+.rate(5) 
+.render() 
+.brushMode("1D-axes") 
+.interactive(); 
+
+var instructions = "" 
+d3.select("#wrapper svg").append("text") 
+.text(instructions) 
+.attr("text-anchor", "middle") 
+.attr("text-decoration", "overline") 
+.attr("transform", "translate(" + graph.width()/2 + "," + (graph.height()-5) + ")");; 
+
+update_colors(d3.keys(data[0])[1]); 
+
+graph.svg.selectAll(".dimension") 
+.on("click", update_colors) 
+.selectAll(".label") 
+.style("font-size", "14px"); 
+
+d3.select("#wrapper svg") 
+.on("mousemove", function() { 
+var mousePosition = d3.mouse(this); 
+highlightLineOnClick(mousePosition, true); //true will also add tooltip 
+}) 
+.on("mouseout", function(){ 
+cleanTooltip(); 
+graph.unhighlight(); 
+}); 
+}); 
+</script>	
+</div> 
+
+</div> 
+</section>
 	
 	<section id="mta-2" style="padding-top: 80px;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">For MTA</h2>					
-					<p class="text-muted">
-					The charts below will provide the reason of the hot car problems along with the repair action from the MTA.
-					<br />Click any section on the sunburst chart and see further information displayed in a parallel set chart. 
-					</p>
+					<p class="text-left" style="color:#808080"> 
+						As it is not always true that the older cars have worse performan, meaning age is not always positively related with "Hot Car" issues, we go further to visualize the relationship between reasons of the hot car problems(dirty, leaking, H/W damaged, malfunctioning, others), repairing method(reset, repair, replace) and "Hot Car" frequency trend. This time, we no longer focus on the frequency counting values, what we really care about is the percetage. That is as being "Hot Cars", how many are caused by malfunctioning. Also, in this "malfunction group", how many need to be replaced or reset. In the chart below, the inner ring represents different in-service age groups, the middle ring is the manufactuer, the outer ring shows car type. We use age group as the inner ring instead of manufactuer is because after 1980, MTA no longer purchase new cars from four companies(Budd, St. Louis, Pullman, westing house). Also, MTA only introduced only one type of car from each of the four companies. So the relationship between these four companies and car type is simply fixed. In this sense, we prefer to conducting analysis on age groups.</p> 
+						<p class="text-left" style="color:#808080"> 
+						Click any section on the sunburst chart and see further information displayed in a parallel set chart. 
+						</p> 
                 </div>
             </div>
             <div class="row text-center">
