@@ -240,17 +240,29 @@
         </div>
     </section>
 
-    <!-- About Section -->
+       <!-- About Section -->
     <section id="about" style="padding-top: 80px;">
        <div class="user_container">
-            <div class="row">
+            <div class="row" >
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">For Passengers</h2>
                 </div>
             </div>
-			<div id="huan">	</div>	
-			<div class="row">
-			</div>			
+            <!-- <div class='row'> -->
+                <div class="col-md-8 text-center">  
+                    <p class="text-muted" style="margin-left: 50px;">
+                        The MTA has complete data of the hot car problem such as incident time, repair time, subway route and car model, but there is no any complete guidance yet for users about this problem. So in this page, we are trying to provide a comprehensive visualization for passengers. We predict which line has the most critical hot car issue so that users can avoid it if possible. Following two visualizations, one is a NYC subway map, another is a heatmap representing relationship between subway lines and weekdays. If user wants to get data for a particular line, mouse over lines or line labels in the subway map, associated data in heatmap will be highlighted. At the same time, mouse will change from arrow into hand, that helps users to easily follow what's going on. What is more, if users want to get information about a particular weekday, heatmap is intuitive. The possibilities of taking a hot car are encoded as color. The redder, the higher possibilities of taking a hot car. if color of two rectangles are similar, user can check actual possibilities in linearGradient.
+                    </p>
+                </div>   
+                <div class='col-md-4 text-center'>
+                    <svg class='subway_map'></svg>
+                </div>  
+            <!-- </div> -->
+            <div class="row col-md-12 text-center"> 
+                <svg class='user_heatmap'></svg>
+            </div>
+         
+			<!-- </div>			 -->
         </div>
 		<script>user_initiate();</script>
 	
