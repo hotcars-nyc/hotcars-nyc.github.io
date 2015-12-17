@@ -19,71 +19,29 @@ var user_x,user_y;
 var user_heatMap, user_subwayMap;
 		
 function user_initiate(){
-	var user_container = d3.select('body').append('div').attr('id','user');
-
-	var user_svg=d3.select('div#huan')
-		  .append('svg')
-		  .attr('width',user_width)
-		  .attr('height',user_height)
-		  .attr('class','users');
 
 	queue().defer(d3.json,'./data/nyc_boroughs.json') 
 		.defer(d3.csv,'./data/weekday_line.csv')
 		.defer(d3.json,'./data/paths.json')
-		.await(user_start(user_svg));
+		.await(user_start());
 }
 
-function user_start(user_svg)
+function user_start()
 {	
 	console.log('start user_start');
-	user_drawSubmap(user_svg);
+	user_drawSubmap();
 	
 	d3.csv("./data/weekday_line.csv",function(error, frequency)
 	{
 		if(error) throw error;
 		frequency.forEach(function(d){d.percentage=+d.percentage;});
-		user_drawHeatMap(frequency,user_svg);
+		user_drawHeatMap(frequency);
 	});
-
-	user_discription(user_svg);
-}
-
-function user_discription(user_svg){
-	var discription =  ["The MTA has complete data of the hot car problem such as incident time, ",
-						"repair time, subway route and car model, but there is no any complete ",
-						"guidance yet for users about this problem. So in this page, we are trying",
-						"to provide a comprehensive visualization for passengers. We predict which ",
-						"line has the most critical hot car issue so that users can avoid it if possible. ", 
-						"Following two visualizations, one is a NYC subway map, another is a heatmap",
-						"representing relationship between subway lines and weekdays. If user wants",
-						"to get data for a particular line, mouse over lines or line labels in the subway",
-						"map, associated data in heatmap will be highlighted. At the same time, mouse ",
-						"will change from arrow into hand, that helps users to easily follow what's going",
-						"on. What is more, if users want to get information about a particular weekday,",
-						"heatmap is intuitive. The possibilities of taking a hot car are encoded as color. ",
-						"The redder, the higher possibilities of taking a hot car. if color of two rectangles ",
-						"are similar, user can check actual possibilities in linearGradient."
-						];
-
-	var content=user_svg.append('g')
-						.attr('id','discription')
-						.attr('transform',"translate("+cross+","+"70)")
-						.selectAll('.user_discription')
-						.data(discription)
-						.enter()
-						.append('text')
-						.text(function(d){return d;})
-						.attr('x',0)
-						.attr('y',function(d,i){return i*user_font_size;})
-						.attr('class','user_discription')
-						.attr('font-size',user_font_size);
-
 
 }
 	
-function user_drawHeatMap(frequency,user_svg)
+function user_drawHeatMap(frequency)
 {
-
 	console.log('start user_drawHeatMap');
 	console.log(frequency);
 	var minFreq=d3.min(frequency, function(d){return d.percentage;}),
@@ -106,17 +64,12 @@ function user_drawHeatMap(frequency,user_svg)
 	user_x=d3.scale.ordinal().domain(user_lines).range(Range(cross,cross+21*gridWidth,21));
 	user_y=d3.scale.ordinal().domain(days).range(Range(gridHeight/2,7*gridHeight+gridHeight/2,7));		
 	
-	user_heatMap = user_svg.append('g')
+	user_heatMap = d3.select('svg.user_heatmap')
+					.attr('width',user_width)
+					.attr('height',user_height/3)
+					.append('g')
 					.attr('class','user_heatMap')
-					.attr('transform',"translate("+0+","+(subWayHeight+10)+")");
-	
-	// var title=user_heatMap.append('text')
-	// 				.attr('class','user_subTitle')
-	// 				.attr('x',user_width/2)
-	// 				.attr('y',-7)
-	// 				.attr('text-anchor','middle')
-	// 				.style('font-size','30px')
-	// 				.text('Possibility of taking a hot car');
+					.attr('transform','translate(0,20)');
 	
 	var dayLabels = user_heatMap.append('g')
 							.attr('class','user_dayLabels')
@@ -236,18 +189,23 @@ function user_drawHeatMap(frequency,user_svg)
 function user_drawSubmap(user_svg)
 {
 	console.log('start user_drawSubmap');
-	var mapScale = 40000;
+	var mapScale = 35000;
 
    // SUBWAY
 	var projection = d3.geo.mercator()
 					.center([-73.955, 40.678])
-		            .translate([user_width*2/3, subWayHeight*2/3])
+		            .translate([100,193])
 		            .scale([mapScale]);
                
 	var path = d3.geo.path()
             	.projection(projection);
 	
-	user_subwayMap=user_svg.append('g').attr('class','user_subwayMap');
+	user_subwayMap=d3.select('svg.subway_map')
+						.attr('height',user_height/2)
+						.attr('width',user_width/3)
+						.append('g')
+						.attr('class','user_subwayMap');
+	
 	NYC();
 	PATHS();
 	lineStart();
