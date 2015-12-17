@@ -27,6 +27,7 @@ var arc = d3.svg.arc()
     .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
 
 d3.json("./data/wheel.json", function(error, json) {
+	console.log(json);
   var nodes = partition.nodes({children: json});
 
   var path = vis.selectAll("path").data(nodes);
