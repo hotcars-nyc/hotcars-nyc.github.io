@@ -156,7 +156,7 @@ function generate_parallel_set(fileName)
 	console.log(chart.width());
 	var vis2 = d3.select("#vis3").append("svg")
 		.attr("id","parallel_set_svg")
-		.attr("width", chart.width()-500)
+		.attr("width", chart.width()-1000)
 		.attr("height", chart.height());
 
 	var partition2 = d3.layout.partition()
