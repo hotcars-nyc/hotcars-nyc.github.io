@@ -49,7 +49,7 @@ var R188=[{
 "Year:2012": "0",
 "Year:2013": "0",
 "Year:2014": "1",
-"cartype": "R32",
+"cartype": "R188",
 "month": "Jun"},
 {"AvgMRatio":"0.00",
 "AvgRatio": "0.00",
@@ -130,60 +130,7 @@ var parallel_color_set = d3.scale.ordinal().domain(parallel_months).range(['#FFA
 
 
 // load default chart
-d3.csv("./data/month.csv", function(data){
 
-
-// collect text for first column to adjust left margin
-var firstCell = data.map(function(d){return d3.values(d)[0]});
-
-// find the longest text size in the first row to adjust left margin
-var textLength = 0;
-firstCell.forEach(function(d){
- 	if (d.length > textLength) textLength = d.length;
- });
-
-
-// get parallel coordinates
-graph = d3.parcoords()('#wrapper')
-	.data(data)
-		.margin({ top: 25, left: 3 * textLength, bottom: 25, right: 0 })
-		.alpha(0.6)
-		.mode("queue")
-		.rate(5)
-		.render()
-		.brushMode("1D-axes")  // enable brushing
-		.interactive();
-		
-
-
-// add instruction text
-var instructions = ""
-d3.select("#wrapper svg").append("text")
-	.text(instructions)
-	.attr("text-anchor", "middle")
-	.attr("text-decoration", "overline")
-	.attr("transform", "translate(" + graph.width()/2 + "," + (graph.height()-5) + ")");;
-
-// set the initial coloring based on the 3rd column
-update_colors(d3.keys(data[0])[1]);
- // click label to activate coloring
-graph.svg.selectAll(".dimension")
-    .on("click", update_colors)
-    .selectAll(".label")
-    	.style("font-size", "14px"); // change font sizes of selected lable
-
-//add hover event
-d3.select("#wrapper svg")
-	.on("mousemove", function() {
-	    var mousePosition = d3.mouse(this);
-	    highlightLineOnClick(mousePosition, true); //true will also add tooltip
-	})
-	.on("mouseout", function(){
-		cleanTooltip();
-		graph.unhighlight();
-	});
-
-});
 
 // update color and font weight of chart based on axis selection
 // modified from here: https://syntagmatic.github.io/parallel-coordinates/
