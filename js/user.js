@@ -28,7 +28,6 @@ function user_initiate(){
 
 function user_start()
 {	
-	console.log('start user_start');
 	user_drawSubmap();
 	
 	d3.csv("./data/weekday_line.csv",function(error, frequency)
@@ -43,7 +42,6 @@ function user_start()
 function user_drawHeatMap(frequency)
 {
 	console.log('start user_drawHeatMap');
-	console.log(frequency);
 	var minFreq=d3.min(frequency, function(d){return d.percentage;}),
 		maxFreq=d3.max(frequency, function(d){return d.percentage;});
 	var rectColor=d3.scale.linear().range(['#fff9f9','#e50000']).domain([minFreq,maxFreq]);
@@ -188,7 +186,6 @@ function user_drawHeatMap(frequency)
 
 function user_drawSubmap(user_svg)
 {
-	console.log('start user_drawSubmap');
 	var mapScale = 35000;
 
    // SUBWAY
@@ -248,8 +245,6 @@ function user_drawSubmap(user_svg)
     				 .style('stroke-opacity',0.6)
     				 .style('cursor','pointer')
     				 .on('mouseover',function(d){
-	        			console.log(d);
-	        			console.log('stops: '+d.properties.lines[0]);
 	   					user_highLightLine(d.properties.lines[0]);
 	        		})
 	        		.on('mouseout',function(){
@@ -278,8 +273,6 @@ function user_drawSubmap(user_svg)
         		.text(function(d){return d.Line;})
         		.style('cursor','pointer')
         		.on('mouseover',function(d){
-        			console.log(d);
-        			console.log('stops: '+d.Line);
    					user_highLightLine(d.Line);
         		})
         		.on('mouseout',function(){
