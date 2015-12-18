@@ -8,6 +8,6 @@ Yanpu Li
 
 Huan Ye
 
-Our working link: [our link!](http://hotcars-nyc.github.io)
+Our working link: [Click on me!](http://hotcars-nyc.github.io)
 
 
