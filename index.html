@@ -140,7 +140,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">Introduction</h2>
-                    <p class="text-muted">
+                    <p class="text-left" style="color:#808080">
 					New York City (NYC) is the most populous city in the US and has been described as the cultural and financial capital of the world. As a metropolitan city, the public transportation plays a very important role for the convenience of the city's dwellers and visitors. The subway is considered as the favorite public transportation. However, during summer time where most people would visit the city, there has been a major issue occurred frequently over years, which is the hot cars problem. The hot car problem is caused by the air-conditioning breakdowns in the subway cars which happened about 10 times a day during June, July and August between 2010 and 2014, according to analysis of Metropolitan Transportation Authority data obtained by The New York World through open records request. In total, there were nearly 6,500 “hot cars” over the five-year period covered by the data. Unsurprisingly, the vast majority of those incidents occurred during the hottest months of the year. This problem brings a very bad experience for the users, as they described that it was a horrendous to be stuck on an underground hot train.
 					</p>
 					<iframe width="420" height="315" src="https://www.youtube.com/embed/UrOkAUUkJqs" frameborder="0" allowfullscreen></iframe>
@@ -164,8 +164,8 @@
                 <div class="col-lg-12 text-center">
 					<h2 class="section-heading">Overview</h2>
 				</div>
-                <div class="col-md-5 text-center">                    
-                    <p class="text-muted">
+                <div class="col-md-6 text-center">                    
+                     <p class="text-left" style="color:#808080">
 						The MTA’s Division of Car Equipment performs daily pre-service inspections of the HVAC (heating, ventilation and air conditioning) units on each of the subway’s 6,300 subway cars.
 
 						Air-conditioning breakdowns happened about 10 times a day during June, 
@@ -178,7 +178,7 @@
 					</p>
 					
 				</div>
-				<div class="col-md-7 text-center">
+				<div class="col-md-6 text-center">
 				
 					<div id="chart-overview"></div>
 					
@@ -247,8 +247,8 @@
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">For Passengers</h2>
                 </div>
-                <div class="col-md-8 text-center">  
-                    <p class="text-muted" style="margin-left: 50px;">
+                <div class="col-md-8 text-left">  
+                    <p class="text-left" style="margin-left: 50px; color:#808080">
                         The MTA has complete data of the hot car problem such as incident time, repair time, subway route and car model, but there is no any complete guidance yet for users about this problem. So in this page, we are trying to provide a comprehensive visualization for passengers. We predict which line has the most critical hot car issue so that users can avoid it if possible. Following two visualizations, one is a NYC subway map, another is a heatmap representing relationship between subway lines and weekdays. If user wants to get data for a particular line, mouse over lines or line labels in the subway map, associated data in heatmap will be highlighted. At the same time, mouse will change from arrow into hand, that helps users to easily follow what's going on. What is more, if users want to get information about a particular weekday, heatmap is intuitive. The possibilities of taking a hot car are encoded as color. The redder, the higher possibilities of taking a hot car. if color of two rectangles are similar, user can check actual possibilities in linearGradient. From the heatmap below, we can notice that line 3 has the most critical hot car issue, so if passengers have candidate lines, take candidates.
                     </p>
                 </div>   
@@ -375,30 +375,34 @@ graph.unhighlight();
     </section>
 
     <!-- MTA Conclusion Section -->
-    <section id="mta-2" style="padding-top: 80px;">
-        <div class="col-lg-12 text-center">
-            <h2 class="section-heading">For MTA: Conclusion</h2>    
-            <p class="text-left" style="color:#808080">
-                No matter in which age group, malfunctioning is always the major reason to cause hot car issue. 
-                However, the percetage of "malfunctioning" is not straight up from the youngest age group to the oldest. 
-                The trend is more like a parabola. That is the percetage of "malfunctioning" goes up when the in-service age getting larger, and reach the peak at the group [10,15]. 
-                Then it keeps decreasing and reaches the lowest at group [45,50]. 
-                Meanwhile, the range of defects reason becomes more diverse when the in-service age is larger than 25. Also, the percetage for each defect becomes more evenly when the age becoming larger. 
-                Regarding to repairing method, for younger car types, replacement and reset are nearly half and half. With age increasing, replacement becomes dominant.
-            </p>
-            <p>
-                In general, the older cars have more "Hot Car" issues, and their defects become more diverse. But still malfunctioning is the major reason of causing hot car issue. 
-                Moreover, the major repairing method of older cars is replacement. 
-                As last, we take a look at the special R142A again. 
-                More than 45% of R142A's hot cars are being reset to get fixed. 
-                While for other car types, the major repairing method is replacement. 
-                In this sense, we assume that though R142A's avgRatio is abnormally high, 
-                nearly half of its hot cars can be fixed by a relatively low-cost method: resetting, compared to replacement. 
-                This may probably because as being a young car, most of R142A's problems are pretty small and easy to be repaired. 
-            </p>
-            <p>
-                In conclusion, considering the in-service age, avgRatio, defects and repairment, R46, R68A, R160, R143 are car types with high performance, which we highly recommend. 
-            </p>
+    <section id="mta-conclusion" style="padding-top: 80px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">For MTA: Conclusion</h2>    
+                    <p class="text-left" style="color:#808080">
+                        No matter in which age group, malfunctioning is always the major reason to cause hot car issue. 
+                        However, the percetage of "malfunctioning" is not straight up from the youngest age group to the oldest. 
+                        The trend is more like a parabola. That is the percetage of "malfunctioning" goes up when the in-service age getting larger, and reach the peak at the group [10,15]. 
+                        Then it keeps decreasing and reaches the lowest at group [45,50]. 
+                        Meanwhile, the range of defects reason becomes more diverse when the in-service age is larger than 25. Also, the percetage for each defect becomes more evenly when the age becoming larger. 
+                        Regarding to repairing method, for younger car types, replacement and reset are nearly half and half. With age increasing, replacement becomes dominant.
+                    </p>
+                    <p class="text-left" style="color:#808080">
+                        In general, the older cars have more "Hot Car" issues, and their defects become more diverse. But still malfunctioning is the major reason of causing hot car issue. 
+                        Moreover, the major repairing method of older cars is replacement. 
+                        As last, we take a look at the special R142A again. 
+                        More than 45% of R142A's hot cars are being reset to get fixed. 
+                        While for other car types, the major repairing method is replacement. 
+                        In this sense, we assume that though R142A's avgRatio is abnormally high, 
+                        nearly half of its hot cars can be fixed by a relatively low-cost method: resetting, compared to replacement. 
+                        This may probably because as being a young car, most of R142A's problems are pretty small and easy to be repaired. 
+                    </p>
+                    <p class="text-left" style="color:#808080">
+                        In conclusion, considering the in-service age, avgRatio, defects and repairment, R46, R68A, R160, R143 are car types with high performance, which we highly recommend. 
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 
