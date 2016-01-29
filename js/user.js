@@ -68,7 +68,7 @@ function user_drawHeatMap(frequency)
 					.append('g')
 					.attr('class','user_heatMap')
 					.attr('transform','translate(0,20)');
-	
+	console.log(user_heatMap);
 	var dayLabels = user_heatMap.append('g')
 							.attr('class','user_dayLabels')
 							.selectAll(".user_dayLabel")
